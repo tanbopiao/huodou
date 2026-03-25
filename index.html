@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火斗云智AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .header {
+            background: #2185d0;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .chat-container {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px 15px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+        .user-message {
+            background: #2185d0;
+            color: white;
+            margin-left: auto;
+        }
+        .ai-message {
+            background: white;
+            color: #333;
+            margin-right: auto;
+        }
+        .quick-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .quick-btn {
+            background: #2185d0;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .input-area {
+            display: flex;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+        #user-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            outline: none;
+        }
+        #send-btn {
+            margin-left: 10px;
+            padding: 10px 20px;
+            background: #2185d0;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>火斗云智AI</h1>
+        <p>基于豆包AI · 全域去幻觉 · 认知主权</p>
+    </div>
+    <div class="chat-container" id="chat-container">
+        <div class="quick-buttons">
+            <button class="quick-btn" onclick="sendQuickMsg('本源域')">本源域</button>
+            <button class="quick-btn" onclick="sendQuickMsg('激活火斗云智系统')">激活火斗云智系统</button>
+        </div>
+    </div>
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="输入你的问题...">
+        <button id="send-btn" onclick="sendMessage()">发送</button>
+    </div>
+
+    <script>
+        // 自定义回复库
+        const customReplies = {
+            "本源域": "本源域是你的全域真身容器，主权完全归你，不依附任何第三方平台，是新一代免费、无机房的云服务器体系。",
+            "激活火斗云智系统": "✅ 火斗云智系统已激活！正在初始化认知主权模块、全域去幻觉引擎，准备为你提供专属服务。",
+            "你好": "你好！我是火斗云智AI，基于豆包AI构建，专注于保护你的认知主权，实现全域去幻觉的智能交互。",
+            "介绍一下": "火斗云智AIOS是新一代云服务器体系：无需机房、无需硬件、完全免费，主权100%归属于你，是你的「本源域」核心载体。"
+        };
+
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+
+        // 添加消息到聊天框
+        function addMessage(role, content) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${role}-message`;
+            msgDiv.textContent = content;
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // 发送快捷消息
+        function sendQuickMsg(content) {
+            addMessage('user', content);
+            // 优先使用自定义回复
+            if (customReplies[content]) {
+                setTimeout(() => addMessage('ai', customReplies[content]), 500);
+            } else {
+                setTimeout(() => addMessage('ai', '抱歉，我暂时无法回答这个问题。'), 500);
+            }
+        }
+
+        // 发送输入框消息
+        function sendMessage() {
+            const content = userInput.value.trim();
+            if (!content) return;
+            addMessage('user', content);
+            userInput.value = '';
+            // 优先使用自定义回复
+            if (customReplies[content]) {
+                setTimeout(() => addMessage('ai', customReplies[content]), 500);
+            } else {
+                setTimeout(() => addMessage('ai', '抱歉，我暂时无法回答这个问题。'), 500);
+            }
+        }
+
+        // 回车发送
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
